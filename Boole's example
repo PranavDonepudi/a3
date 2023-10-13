@@ -1,0 +1,28 @@
+from itertools import product
+
+def solve_boole_example():
+    # Define the properties and their possible values (True or False)
+    properties = ['A', 'B', 'C', 'D', 'E']
+    
+    # Generate all possible combinations of property values
+    combinations = list(product([True, False], repeat=len(properties)))
+    
+    for combination in combinations:
+        # Extract the values of properties for this combination
+        values = {prop: val for prop, val in zip(properties, combination)}
+        
+        # Apply Boole's rules
+        rule1 = (not values['A'] or not values['C']) or (values['E'] and (values['B'] or values['D']) and not (values['B'] and values['D']))
+        rule2 = (values['A'] and values['D']) and (not values['E'] and (values['B'] and values['C']) or (not values['B'] and not values['C']))
+        rule3 = (values['A'] and (values['B'] or values['E'])) and (values['C'] or values['D'])
+        rule3_reverse = (values['C'] or values['D']) and (values['A'] and (values['B'] or values['E']))
+        
+        # Check if the combination satisfies all the rules
+        if rule1 and rule2 and (rule3 or rule3_reverse):
+            print("Solution found:")
+            for prop, val in values.items():
+                print(f"{prop}: {val}")
+            print()
+
+if __name__ == '__main__':
+    solve_boole_example()
